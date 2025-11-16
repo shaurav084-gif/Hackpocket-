@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tap2Hack - Professional Hacker Dashboard</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for Neon Theme and Effects */
+        :root {
+            --neon-green: #39ff14;
+            --neon-blue: #00ffff;
+            --bg-color: #0d1117;
+            --card-bg: #161b22;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #c9d1d9;
+            /* Matrix-style background effect */
+            background-image: repeating-linear-gradient(
+                0deg, 
+                rgba(0, 0, 0, 0) 0, 
+                rgba(0, 255, 0, 0.03) 1px, 
+                rgba(0, 0, 0, 0) 2px
+            ),
+            repeating-linear-gradient(
+                90deg, 
+                rgba(0, 0, 0, 0) 0, 
+                rgba(0, 255, 255, 0.03) 1px, 
+                rgba(0, 0, 0, 0) 2px
+            );
+            background-size: 50px 50px;
+            animation: matrix-fade 60s linear infinite;
+        }
+
+        @keyframes matrix-fade {
+            to {
+                background-position: 1000px 1000px;
+            }
+        }
+
+        /* Neon Glow Effect for Text and Borders */
+        .neon-text-green {
+            text-shadow: 0 0 5px var(--neon-green), 0 0 10px var(--neon-green);
+            color: var(--neon-green);
+        }
+
+        .neon-text-blue {
+            text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        .neon-border-green {
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-green);
+        }
+
+        .neon-button {
+            background-color: transparent;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-blue);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .neon-button:hover {
+            background-color: var(--neon-blue);
+            color: var(--bg-color);
+            box-shadow: 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue);
+        }
+        
+        /* Typing Effect Cursor */
+        #typing-text::after {
+            content: '|';
+            display: inline-block;
+            animation: blink 0.7s infinite;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* Glitch Effect for Logo/Title */
+        .glitch-text {
+            position: relative;
+            animation: glitch-animation 2s infinite linear alternate;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -1px 0 var(--neon-green);
+            clip-path: inset(calc(30% * var(--clip-offset, 1)) 0 calc(70% * var(--clip-offset, 1)) 0);
+            animation: glitch-top 2s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: 1px 0 var(--neon-blue);
+            clip-path: inset(calc(60% * var(--clip-offset, 1)) 0 calc(40% * var(--clip-offset, 1)) 0);
+            animation: glitch-bottom 2s infinite linear alternate;
+        }
+
+        @keyframes glitch-top {
+            0% { clip-path: inset(7% 0 88% 0); }
+            10% { clip-path: inset(4% 0 91% 0); }
+            20% { clip-path: inset(8% 0 87% 0); }
+            30% { clip-path: inset(2% 0 93% 0); }
+            40% { clip-path: inset(5% 0 90% 0); }
+            50% { clip-path: inset(1% 0 94% 0); }
+            60% { clip-path: inset(3% 0 92% 0); }
+            70% { clip-path: inset(6% 0 89% 0); }
+            80% { clip-path: inset(0% 0 95% 0); }
+            90% { clip-path: inset(10% 0 85% 0); }
+            100% { clip-path: inset(0% 0 100% 0); }
+        }
+
+        @keyframes glitch-bottom {
+            0% { clip-path: inset(90% 0 0% 0); }
+            10% { clip-path: inset(92% 0 0% 0); }
+            20% { clip-path: inset(89% 0 0% 0); }
+            30% { clip-path: inset(93% 0 0% 0); }
+            40% { clip-path: inset(91% 0 0% 0); }
+            50% { clip-path: inset(94% 0 0% 0); }
+            60% { clip-path: inset(90% 0 0% 0); }
+            70% { clip-path: inset(88% 0 0% 0); }
+            80% { clip-path: inset(95% 0 0% 0); }
+            90% { clip-path: inset(85% 0 0% 0); }
+            100% { clip-path: inset(100% 0 0% 0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Header & Navigation -->
+    <header class="p-4 md:p-6 shadow-xl sticky top-0 z-10" style="background-color: rgba(13, 17, 23, 0.95);">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo Section -->
+            <div class="text-3xl font-extrabold tracking-wider glitch-text" data-text="Tap2Hack">
+                <span class="neon-text-green">Tap2</span><span class="neon-text-blue">Hack</span>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-button" class="md:hidden p-2 rounded-md focus:outline-none" aria-label="Toggle menu">
+                <svg class="w-6 h-6 neon-text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-6 text-lg font-mono">
+                <a href="#" class="hover:text-white neon-text-blue transition duration-300">Home</a>
+                <a href="#tools" class="hover:text-white transition duration-300">Tools</a>
+                <a href="#blog" class="hover:text-white transition duration-300">Blog</a>
+                <a href="#courses" class="hover:text-white transition duration-300">Courses</a>
+                <a href="#contact" class="hover:text-white transition duration-300">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Menu (Hidden by default) -->
+    <nav id="mobile-menu" class="md:hidden absolute w-full top-16 left-0 p-4 font-mono z-20 transition-transform duration-300 transform -translate-y-full" style="background-color: var(--card-bg);">
+        <a href="#" class="block p-3 hover:bg-gray-800 neon-text-green">Home</a>
+        <a href="#tools" class="block p-3 hover:bg-gray-800">Tools</a>
+        <a href="#blog" class="block p-3 hover:bg-gray-800">Blog</a>
+        <a href="#courses" class="block p-3 hover:bg-gray-800">Courses</a>
+        <a href="#contact" class="block p-3 hover:bg-gray-800">Contact</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto p-4 md:p-8">
+
+        <!-- Hero Section -->
+        <section class="text-center py-16 md:py-24 space-y-4">
+            <p class="text-xl md:text-2xl font-mono text-gray-400">
+                INITIATING...
+            </p>
+            <h1 class="text-4xl md:text-6xl font-extrabold uppercase tracking-widest leading-tight">
+                <span id="typing-text" class="neon-text-green"></span>
+            </h1>
+            <p class="text-sm md:text-base text-gray-500 mt-4 font-mono">
+                ACCESS GRANTED // SYSTEM ONLINE
+            </p>
+            <div class="pt-8">
+                <button class="neon-button px-6 py-3 rounded-lg font-bold uppercase text-sm md:text-base hover:scale-105 transition-transform duration-300">
+                    Start Learning Now
+                </button>
+            </div>
+        </section>
+
+        <!-- Latest Tutorials Section -->
+        <section class="pt-12" id="tutorials">
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 uppercase border-b-2 border-opacity-50 pb-2 neon-text-blue border-neon-blue">
+                Latest Tutorials
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Tutorial Card 1 -->
+                <div class="p-5 rounded-xl neon-border-green shadow-lg transition-transform duration-300 hover:scale-[1.02]" style="background-color: var(--card-bg);">
+                    <h3 class="text-xl font-semibold neon-text-green mb-2">Mobile Pentesing 101</h3>
+                    <p class="text-gray-400 text-sm mb-4">A complete guide to analyzing Android and iOS applications for security flaws using only your phone.</p>
+                    <a href="#" class="text-xs font-mono neon-text-blue hover:underline">Read Article ></a>
+                </div>
+                <!-- Tutorial Card 2 -->
+                <div class="p-5 rounded-xl neon-border-green shadow-lg transition-transform duration-300 hover:scale-[1.02]" style="background-color: var(--card-bg);">
+                    <h3 class="text-xl font-semibold neon-text-green mb-2">Setting up Termux Hacking Lab</h3>
+                    <p class="text-gray-400 text-sm mb-4">Learn how to install, configure, and secure the Termux environment for ethical hacking.</p>
+                    <a href="#" class="text-xs font-mono neon-text-blue hover:underline">Read Article ></a>
+                </div>
+                <!-- Tutorial Card 3 -->
+                <div class="p-5 rounded-xl neon-border-green shadow-lg transition-transform duration-300 hover:scale-[1.02]" style="background-color: var(--card-bg);">
+                    <h3 class="text-xl font-semibold neon-text-green mb-2">Introduction to Bug Bounty</h3>
+                    <p class="text-gray-400 text-sm mb-4">Your first steps into the world of finding security bugs and earning rewards.</p>
+                    <a href="#" class="text-xs font-mono neon-text-blue hover:underline">Read Article ></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Tools Section -->
+        <section class="pt-12" id="tools">
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 uppercase border-b-2 border-opacity-50 pb-2 neon-text-blue border-neon-blue">
+                Featured Tools
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Tool Card 1 -->
+                <div class="p-4 rounded-lg text-center transition-shadow hover:shadow-2xl hover:shadow-cyan-500/50" style="background-color: var(--card-bg);">
+                    <div class="text-4xl mb-2 neon-text-blue">
+                        <span class="font-mono">[NMAP]</span>
+                    </div>
+                    <p class="text-sm text-gray-400">Network Scanner</p>
+                </div>
+                <!-- Tool Card 2 -->
+                <div class="p-4 rounded-lg text-center transition-shadow hover:shadow-2xl hover:shadow-green-500/50" style="background-color: var(--card-bg);">
+                    <div class="text-4xl mb-2 neon-text-green">
+                        <span class="font-mono">[Metasploit]</span>
+                    </div>
+                    <p class="text-sm text-gray-400">Exploitation Framework</p>
+                </div>
+                <!-- Tool Card 3 -->
+                <div class="p-4 rounded-lg text-center transition-shadow hover:shadow-2xl hover:shadow-cyan-500/50" style="background-color: var(--card-bg);">
+                    <div class="text-4xl mb-2 neon-text-blue">
+                        <span class="font-mono">[Wireshark]</span>
+                    </div>
+                    <p class="text-sm text-gray-400">Packet Analyzer</p>
+                </div>
+                <!-- Tool Card 4 -->
+                <div class="p-4 rounded-lg text-center transition-shadow hover:shadow-2xl hover:shadow-green-500/50" style="background-color: var(--card-bg);">
+                    <div class="text-4xl mb-2 neon-text-green">
+                        <span class="font-mono">[Aircrack]</span>
+                    </div>
+                    <p class="text-sm text-gray-400">WLAN Security</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog Articles Section -->
+        <section class="pt-12" id="blog">
+            <h2 class="text-2xl md:text-3xl font-bold mb-8 uppercase border-b-2 border-opacity-50 pb-2 neon-text-blue border-neon-blue">
+                Blog Articles
+            </h2>
+            <div class="space-y-4">
+                <!-- Blog Entry 1 -->
+                <div class="p-4 rounded-lg flex flex-col md:flex-row justify-between items-center transition-colors hover:bg-gray-800" style="background-color: var(--card-bg);">
+                    <div class="mb-2 md:mb-0">
+                        <a href="#" class="text-lg font-semibold hover:underline neon-text-green">
+                            The Future of Mobile Security in 2025
+                        </a>
+                        <p class="text-xs text-gray-500 font-mono">2 days ago | Category: Analysis</p>
+                    </div>
+                    <button class="neon-button px-4 py-1 text-sm rounded-md">
+                        VIEW LOG
+                    </button>
+                </div>
+                <!-- Blog Entry 2 -->
+                <div class="p-4 rounded-lg flex flex-col md:flex-row justify-between items-center transition-colors hover:bg-gray-800" style="background-color: var(--card-bg);">
+                    <div class="mb-2 md:mb-0">
+                        <a href="#" class="text-lg font-semibold hover:underline neon-text-green">
+                            Understanding Buffer Overflows on ARM Architecture
+                        </a>
+                        <p class="text-xs text-gray-500 font-mono">1 week ago | Category: Deep Dive</p>
+                    </div>
+                    <button class="neon-button px-4 py-1 text-sm rounded-md">
+                        VIEW LOG
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="mt-16 p-6 md:p-8 border-t border-gray-700/50 text-center">
+        <div class="max-w-7xl mx-auto">
+            <p class="text-sm mb-4 font-mono text-gray-500">
+                // END OF TRANSMISSION // Tap2Hack &copy; 2025
+            </p>
+            <div class="flex justify-center space-x-6 text-2xl">
+                <!-- GitHub -->
+                <a href="#" aria-label="GitHub" class="hover:text-white neon-text-green transition-transform duration-300 hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.087-.744.084-.692.084-.692 1.205.086 1.838 1.233 1.838 1.233 1.071 1.832 2.809 1.306 3.493.996.108-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.292-1.552 3.3-1.23 3.3-1.23.653 1.653.242 2.873.118 3.176.768.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.562 21.821 24 17.329 24 12 24 5.373 18.627 0 12 0z"/></svg>
+                </a>
+                <!-- Telegram (using a simple plane icon for placeholder) -->
+                <a href="#" aria-label="Telegram" class="hover:text-white neon-text-blue transition-transform duration-300 hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 0l-6 22-8-8-8 8.055 7.248-12.055-6.248-3.921 24-2.084z"/></svg>
+                </a>
+                <!-- YouTube -->
+                <a href="#" aria-label="YouTube" class="hover:text-white neon-text-green transition-transform duration-300 hover:scale-110">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l9 4-9 4z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Typing Effect and Mobile Menu -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Mobile Menu Toggle ---
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            menuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('-translate-y-full');
+                mobileMenu.classList.toggle('translate-y-0');
+            });
+            
+            // Close menu when a link is clicked (important for mobile UX)
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('-translate-y-full');
+                    mobileMenu.classList.remove('translate-y-0');
+                });
+            });
+
+
+            // --- Typing Effect ---
+            const typingElement = document.getElementById('typing-text');
+            const textToType = "LEARN HACKING FROM MOBILE - TAP2HACK";
+            let charIndex = 0;
+            const typingSpeed = 50; // Milliseconds per character
+
+            function typeText() {
+                if (charIndex < textToType.length) {
+                    // Append the next character to the text content
+                    typingElement.textContent += textToType.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeText, typingSpeed);
+                }
+            }
+
+            // Start the typing effect after a small delay
+            setTimeout(typeText, 500);
+        });
+    </script>
+
+</body>
+</html>
+
